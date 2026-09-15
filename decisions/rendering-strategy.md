@@ -62,10 +62,10 @@ New static version generated
 That provides the important advantages of static content:
 
 ```text
-fast initial load
-good SEO
-crawlable HTML
-low server cost
-easy CDN caching
-stable canonical URLs
+- fast initial load
+- good SEO
+- crawlable HTML
+- low server cost
+- easy CDN caching
+- stable canonical URLs
 ```
