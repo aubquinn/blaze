@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { ContactForm } from './ContactForm';
+import { Home } from './Home';
 
 const meta = {
-  component: ContactForm,
-} satisfies Meta<typeof ContactForm>;
+  component: Home,
+} satisfies Meta<typeof Home>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

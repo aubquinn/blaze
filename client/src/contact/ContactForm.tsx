@@ -4,7 +4,7 @@ import { TextInput } from "@astryxdesign/core/TextInput";
 import { TextArea } from '@astryxdesign/core/TextArea'
 import { Button } from "@astryxdesign/core/Button";
 
-function ContactForm() {
+export const ContactForm = () => {
 
   return (
     <>
@@ -18,5 +18,3 @@ function ContactForm() {
     </>
   )
 }
-
-export default ContactForm
