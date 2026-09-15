@@ -2,7 +2,7 @@
 
 # Articles
 
-The data shape of my articles will most likely take this shape:
+The data shape of blog articles will most likely take this form:
 
 ```text
 articles
@@ -85,7 +85,7 @@ CloudFront CDN
 S3 bucket
 ```
 
-If a blog article has an image such as, /articles/aria-basics/diagram.webp, the file physically lives in S3.
+If a blog article has an image such as, `/articles/aria-basics/diagram.webp`, the file physically lives in S3.
 
 When someone in Ireland requests it, CloudFront can fetch it from S3 once, then cache it at an edge location closer to users. Subsequent requests can be served from the CDN cache instead of going all the way back to S3.
 

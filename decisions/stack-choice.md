@@ -26,6 +26,7 @@ Next.js / TypeScript
     → frontend architecture
 
 Astryx
+
     → accessible UI + design-system practice
 
 ASP.NET Core / C#
