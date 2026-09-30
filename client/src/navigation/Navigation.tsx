@@ -1,3 +1,8 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Heading,
   SideNav,
@@ -20,6 +25,10 @@ const navigationItems = [
 ];
 
 export const Navigation = ({ layout = "side" }: NavigationProps) => {
+  const pathname = usePathname();
+  const isSelected = (href: string) =>
+    pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
+
   if (layout === "top") {
     return (
       <Stack
@@ -33,7 +42,7 @@ export const Navigation = ({ layout = "side" }: NavigationProps) => {
         <TopNavHeading
           heading="Aubrey Quinn"
           logo={
-            <img
+            <Image
               alt="Portrait of Aubrey Quinn"
               src={logoImg}
               width={24}
@@ -46,7 +55,12 @@ export const Navigation = ({ layout = "side" }: NavigationProps) => {
           style={{ width: "auto", padding: 0 }}
         >
           {navigationItems.map((item) => (
-            <TopNavItem key={item.href} {...item} />
+            <TopNavItem
+              key={item.href}
+              as={Link}
+              {...item}
+              isSelected={isSelected(item.href)}
+            />
           ))}
         </TopNav>
       </Stack>
@@ -66,13 +80,23 @@ export const Navigation = ({ layout = "side" }: NavigationProps) => {
             gap={2}
             padding={2}
           >
-            <img alt="Portrait of Aubrey Quinn" src={logoImg} />
+            <Image
+              alt="Portrait of Aubrey Quinn"
+              src={logoImg}
+              sizes="228px"
+              style={{ width: "100%", height: "auto" }}
+            />
             <Heading level={1}>Aubrey Quinn</Heading>
           </Stack>
         }
       >
         {navigationItems.map((item) => (
-          <SideNavItem key={item.href} {...item} />
+          <SideNavItem
+            key={item.href}
+            as={Link}
+            {...item}
+            isSelected={isSelected(item.href)}
+          />
         ))}
       </SideNav>
     </>

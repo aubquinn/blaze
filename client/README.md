@@ -1,75 +1,62 @@
-# React + TypeScript + Vite
+# Blaze client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The site uses Next.js App Router, React, TypeScript, and the Astryx design system. Its existing Home, ContactForm, and Writing components are reused by the route files.
 
-Currently, two official plugins are available:
+## Development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Use Node.js 24 LTS and pnpm 11. From `client/`:
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```sh
+pnpm install
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Open http://localhost:3000. Next.js handles the application; Vite is used by Storybook and Vitest only.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Routes and components
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| URL | Next.js route | Existing component |
+| --- | --- | --- |
+| `/` | `src/app/page.tsx` | `src/home/Home.tsx` |
+| `/contact` | `src/app/contact/page.tsx` | `src/contact/ContactForm.tsx` |
+| `/writing` | `src/app/writing/page.tsx` | `src/writing/Writing.tsx` |
 
-```
+`src/app/layout.tsx` supplies the document, global Astryx CSS, page metadata, and shared layout. `src/shared/Providers.tsx` supplies the theme in both the application and Storybook. `src/shared/SiteShell.tsx` renders the navigation and the active route's `children`.
+
+Navigation uses Astryx items with `as={Link}` from `next/link`. `usePathname()` supplies the selected state. At 1024px and above the navigation appears at the side; below 1024px the three links remain visible horizontally at the top. `src/app/not-found.tsx` handles unknown URLs.
+
+The current routes are prerendered at build time. Client components provide interactive behavior while the page content is also present in the initial HTML. The Writing page remains a placeholder. The contact form remains the existing UI; sending messages requires a future backend integration.
+
+To add a route, create a `page.tsx` under `src/app` with a default component export. Import a reusable component there and add a navigation entry in `src/navigation/Navigation.tsx` when appropriate.
+
+## Commands
+
+| Command | Purpose |
+| --- | --- |
+| `pnpm dev` | Run the Next.js development server |
+| `pnpm build` | Build and prerender the production application |
+| `pnpm start` | Serve an existing production build |
+| `pnpm typecheck` | Generate Next.js route types and check TypeScript |
+| `pnpm lint` | Run Next.js, React, TypeScript, and Storybook lint rules |
+| `pnpm storybook` | Open Storybook on port 6006 |
+| `pnpm build-storybook` | Build Storybook into `storybook-static/` |
+
+Storybook uses `@storybook/nextjs-vite` with `nextjs.appDirectory: true` to mock Next.js navigation and images. A story can set `parameters.nextjs.navigation.pathname` to preview a selected route.
+
+The existing Storybook/Vitest integration is retained in `vitest.config.ts`. No routing test suite has been added.
+
+TypeScript 5.9, ESLint 9, and Vitest 4 match the supported peer ranges of the current integrations. The pnpm lockfile fixes the resolved versions; avoid replacing these ranges with `latest`.
+
+## Deployment
+
+Run `pnpm build`, then `pnpm start` on a Node.js host that supports Next.js, or use a Next.js hosting integration. `.next/` is the application build output; the old Vite `dist/` directory is no longer used.
+
+This project does not configure a static export. Although the current pages are prerendered, the default image optimizer and future article revalidation use a Next.js runtime.
+
+The ASP.NET Core API and AWS services described in the architecture decisions remain planned work. See [technology choices](../decisions/stack-choice.md) and [rendering strategy](../decisions/rendering-strategy.md).
+
+## References
+
+- [Next.js layouts and pages](https://nextjs.org/docs/app/getting-started/layouts-and-pages)
+- [Next.js linking and navigation](https://nextjs.org/docs/app/getting-started/linking-and-navigating)
+- [Storybook for Next.js with Vite](https://storybook.js.org/docs/get-started/frameworks/nextjs-vite)

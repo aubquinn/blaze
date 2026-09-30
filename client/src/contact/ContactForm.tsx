@@ -1,3 +1,5 @@
+"use client";
+
 import { FormLayout } from "@astryxdesign/core/FormLayout";
 import { TextInput } from "@astryxdesign/core/TextInput";
 import { TextArea } from '@astryxdesign/core/TextArea'

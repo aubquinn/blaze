@@ -1,13 +1,15 @@
-import type { Preview } from '@storybook/react-vite'
+import type { Preview } from '@storybook/nextjs-vite'
 
-import { Theme } from "@astryxdesign/core/theme";
-import { neutralTheme } from "@astryxdesign/theme-neutral/built";
+import { Providers } from "../src/shared/Providers";
 
 import "@astryxdesign/core/reset.css";
 import "@astryxdesign/core/astryx.css";
 
 const preview: Preview = {
   parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
     controls: {
       matchers: {
        color: /(background|color)$/i,
@@ -17,9 +19,9 @@ const preview: Preview = {
   },
     decorators: [
     (Story) => (
-      <Theme theme={neutralTheme} mode="system">
+      <Providers>
         <Story />
-      </Theme>
+      </Providers>
     ),
   ],
 };

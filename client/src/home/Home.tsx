@@ -5,10 +5,10 @@ export const Home = () => {
   return (
     <>
       <Stack direction="vertical" gap={8} padding={8}>
-        <Heading level={1}>Hello, World! I'm Aubrey.</Heading>
+        <Heading level={1}>Hello, World! I&apos;m Aubrey.</Heading>
 
         <Text as="p">
-          I'm a Senior Software Engineer with 10+ years of experience building
+          I&apos;m a Senior Software Engineer with 10+ years of experience building
           customer-focused software, improving engineering practices, and
           delivering reliable solutions across web, mobile, platform, and
           AI-enabled products. I enjoy solving complex problems, learning new
@@ -17,7 +17,7 @@ export const Home = () => {
         </Text>
 
         <Text as="p">
-          When I'm not doing that, I'm usually thinking about writing about
+          When I&apos;m not doing that, I&apos;m usually thinking about writing about
           doing that. Occasionally, I actually manage to write something. Those
           thoughts end up here.
         </Text>

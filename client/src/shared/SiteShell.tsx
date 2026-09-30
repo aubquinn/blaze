@@ -1,9 +1,11 @@
-import { Navigation } from "./navigation/Navigation";
-import { Home } from "./home/Home";
+"use client";
+
+import type { ReactNode } from "react";
+import { Navigation } from "../navigation/Navigation";
 import { AppShell } from "@astryxdesign/core/AppShell";
 import { useMediaQuery } from "@astryxdesign/core";
 
-function App() {
+export const SiteShell = ({ children }: { children: ReactNode }) => {
   const isCompact = useMediaQuery("(width < 1024px)");
 
   return (
@@ -15,9 +17,7 @@ function App() {
       variant="surface"
       contentPadding={0}
     >
-      <Home />
+      {children}
     </AppShell>
   );
-}
-
-export default App;
+};
