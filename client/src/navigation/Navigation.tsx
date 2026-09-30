@@ -58,10 +58,17 @@ export const Navigation = ({ layout = "side" }: NavigationProps) => {
       <SideNav
         aria-label="Primary navigation"
         header={
-          <>
+          <Stack
+            direction="horizontal"
+            wrap="wrap"
+            vAlign="center"
+            hAlign="center"
+            gap={2}
+            padding={2}
+          >
             <img alt="Portrait of Aubrey Quinn" src={logoImg} />
             <Heading level={1}>Aubrey Quinn</Heading>
-          </>
+          </Stack>
         }
       >
         {navigationItems.map((item) => (
