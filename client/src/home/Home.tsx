@@ -1,4 +1,5 @@
-import { Heading, Text } from '@astryxdesign/core/Text'
+import React from "react";
+import { Heading, Text } from "@astryxdesign/core/Text";
 
 export const Home = () => {
   return (
@@ -6,19 +7,19 @@ export const Home = () => {
       <Heading level={1}>Hello, World! I'm Aubrey.</Heading>
 
       <Text>
-        I'm a software engineer who cares about making the web more
-        accessible, faster, and pleasant to use. I spend a lot of time
-        thinking about frontend architecture, design systems, accessibility,
-        and all the tiny decisions that somehow turn into very large
-        engineering discussions.
+        I'm a Senior Software Engineer with 10+ years of experience building
+        customer-focused software, improving engineering practices, and
+        delivering reliable solutions across web, mobile, platform, and
+        AI-enabled products. I enjoy solving complex problems, learning new
+        technologies, and collaborating across disciplines to turn ideas into
+        useful and high-quality products.
       </Text>
 
       <Text>
         When I'm not doing that, I'm usually thinking about writing about doing
-        that. Occasionally, I actually manage to write something. Those
-        thoughts end up here.
+        that. Occasionally, I actually manage to write something. Those thoughts
+        end up here.
       </Text>
     </>
   );
 };
-
