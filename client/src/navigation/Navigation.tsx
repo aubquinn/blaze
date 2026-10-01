@@ -20,8 +20,10 @@ type NavigationProps = {
 
 const navigationItems = [
   { label: "Home", href: "/" },
-  { label: "Contact", href: "/contact" },
+  { label: "About", href: "/about" },
   { label: "Writing", href: "/writing" },
+  { label: "Experiments", href: "/experiments" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const Navigation = ({ layout = "side" }: NavigationProps) => {
