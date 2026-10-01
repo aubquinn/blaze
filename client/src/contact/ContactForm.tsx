@@ -70,6 +70,7 @@ export const ContactForm = () => {
               type="submit"
               isDisabled={isSubmitDisabled}
               isLoading={isPending}
+              tooltip="Complete all required fields to submit"
             />
           </FormLayout>
         </form>
