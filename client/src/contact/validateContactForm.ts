@@ -10,29 +10,18 @@ export type ContactFormErrors = Partial<Record<keyof ContactFormValues, string>>
 // https://html.spec.whatwg.org/multipage/input.html#email-state-(type=email)
 const emailPattern =
   /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-const wordSegmenter = new Intl.Segmenter("en", { granularity: "word" });
 
 export const contactFieldValidators: Record<
   keyof ContactFormValues,
   (value: string) => string | undefined
 > = {
-  name: (value) =>
-    value.trim().length < 5
-      ? "Enter a name with at least 5 characters."
-      : undefined,
+  name: (value) => (value.trim().length === 0 ? "Name is required." : undefined),
   email: (value) =>
     !emailPattern.test(value.trim())
       ? "Enter a valid email address."
       : undefined,
-  message: (value) => {
-    // Use three words as a sentence-length check; punctuation is optional.
-    const words = Array.from(wordSegmenter.segment(value)).filter(
-      (segment) => segment.isWordLike,
-    );
-    return words.length < 3
-      ? "Write a message with at least 3 words."
-      : undefined;
-  },
+  message: (value) =>
+    value.trim().length === 0 ? "Message is required." : undefined,
 };
 
 export function validateContactForm(values: ContactFormValues): ContactFormErrors {

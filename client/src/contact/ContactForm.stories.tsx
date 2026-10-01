@@ -29,21 +29,21 @@ export const Validation: Story = {
     await userEvent.tab();
     await expect(name).not.toHaveAttribute('aria-invalid', 'true');
 
-    await userEvent.type(name, 'Jane');
+    await userEvent.type(name, '   ');
     await expect(name).toHaveFocus();
     await expect(name).not.toHaveAttribute('aria-invalid', 'true');
     await waitFor(async () => {
       await expect(name).toHaveAttribute('aria-invalid', 'true');
       await expect(
-        canvas.getByText('Enter a name with at least 5 characters.'),
+        canvas.getByText('Name is required.'),
       ).toBeVisible();
     });
-    const nameError = canvas.getByText('Enter a name with at least 5 characters.');
+    const nameError = canvas.getByText('Name is required.');
 
     await userEvent.type(email, 'invalid-email');
     await expect(nameError).toBeVisible();
     await expect(
-      canvas.getByText('Enter a name with at least 5 characters.'),
+      canvas.getByText('Name is required.'),
     ).toBe(nameError);
     await expect(email).toHaveFocus();
     await expect(email).not.toHaveAttribute('aria-invalid', 'true');
@@ -53,7 +53,7 @@ export const Validation: Story = {
     });
     const emailError = canvas.getByText('Enter a valid email address.');
 
-    await userEvent.type(message, 'Please help');
+    await userEvent.type(message, '   ');
     await expect(nameError).toBeVisible();
     await expect(emailError).toBeVisible();
     await expect(canvas.getByText('Enter a valid email address.')).toBe(emailError);
@@ -62,24 +62,24 @@ export const Validation: Story = {
     await waitFor(async () => {
       await expect(message).toHaveAttribute('aria-invalid', 'true');
       await expect(
-        canvas.getByText('Write a message with at least 3 words.'),
+        canvas.getByText('Message is required.'),
       ).toBeVisible();
     });
-    const messageError = canvas.getByText('Write a message with at least 3 words.');
+    const messageError = canvas.getByText('Message is required.');
     await expect(submit).toBeDisabled();
 
-    await userEvent.type(name, ' Doe');
+    await userEvent.type(name, 'A');
     await expect(emailError).toBeVisible();
     await expect(messageError).toBeVisible();
     await expect(
-      canvas.getByText('Write a message with at least 3 words.'),
+      canvas.getByText('Message is required.'),
     ).toBe(messageError);
     await expect(name).not.toHaveAttribute('aria-invalid', 'true');
     await userEvent.clear(email);
     await userEvent.type(email, 'jane@example.com');
     await expect(email).not.toHaveAttribute('aria-invalid', 'true');
     await expect(submit).toBeDisabled();
-    await userEvent.type(message, ' me');
+    await userEvent.type(message, 'Hi');
     await expect(message).not.toHaveAttribute('aria-invalid', 'true');
     await expect(submit).toBeDisabled();
     await waitFor(async () => {
@@ -93,8 +93,8 @@ export const Validation: Story = {
       await expect(name).toHaveAttribute('aria-invalid', 'true');
     });
 
-    await userEvent.type(name, 'Jane');
-    await userEvent.type(name, ' Doe');
+    await userEvent.type(name, 'L');
+    await userEvent.type(name, 'i');
     await expect(name).not.toHaveAttribute('aria-invalid', 'true');
     await expect(submit).toBeDisabled();
     await waitFor(async () => {
@@ -111,12 +111,12 @@ export const IndependentValidation: Story = {
     const email = canvas.getByRole('textbox', { name: 'Email Address' });
     const slowTyping = userEvent.setup({ delay: 75 });
 
-    await userEvent.type(name, 'Jane');
+    await userEvent.type(name, '   ');
     // Name validation must finish while typing continues in the email field.
     await slowTyping.type(email, 'invalid-email');
     await expect(name).toHaveAttribute('aria-invalid', 'true');
     await expect(
-      canvas.getByText('Enter a name with at least 5 characters.'),
+      canvas.getByText('Name is required.'),
     ).toBeVisible();
     await expect(email).not.toHaveAttribute('aria-invalid', 'true');
 
@@ -137,12 +137,12 @@ export const Submission: Story = {
     const submit = canvas.getByRole('button', { name: 'Submit' });
 
     await expect(submit).toBeDisabled();
-    await userEvent.type(name, 'Jane Doe');
+    await userEvent.type(name, 'Li');
     await userEvent.type(email, 'jane@example.com');
     await userEvent.type(message, '   ');
     await expect(submit).toBeDisabled();
     await userEvent.clear(message);
-    await userEvent.type(message, 'Hello, I would like to get in touch');
+    await userEvent.type(message, 'Hi');
     await waitFor(async () => {
       await expect(submit).toBeEnabled();
     });
@@ -154,13 +154,13 @@ export const Submission: Story = {
     await expect(within(submit).getByRole('status')).toHaveTextContent(/Loading/);
     await expect(name).toBeVisible();
     await expect(name).toBeDisabled();
-    await expect(name).toHaveValue('Jane Doe');
+    await expect(name).toHaveValue('Li');
     await expect(email).toBeVisible();
     await expect(email).toBeDisabled();
     await expect(email).toHaveValue('jane@example.com');
     await expect(message).toBeVisible();
     await expect(message).toBeDisabled();
-    await expect(message).toHaveValue('Hello, I would like to get in touch');
+    await expect(message).toHaveValue('Hi');
 
     await waitFor(async () => {
       await expect(

@@ -34,7 +34,6 @@ export const ContactForm = () => {
             </Text>
             <TextInput
               label="Full Name"
-              description="At least 5 characters."
               htmlName="name"
               autoComplete="name"
               value={name.value}
@@ -58,7 +57,6 @@ export const ContactForm = () => {
             />
             <TextArea
               label="Message"
-              description="Please use at least 3 words. Punctuation is optional."
               htmlName="message"
               value={message.value}
               onChange={message.onChange}

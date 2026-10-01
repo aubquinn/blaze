@@ -7,13 +7,6 @@ export default defineConfig({
   test: {
     projects: [
       {
-        test: {
-          name: "unit",
-          environment: "node",
-          include: ["src/**/*.test.ts"],
-        },
-      },
-      {
         extends: true,
         plugins: [
           storybookTest({ configDir: path.join(import.meta.dirname, ".storybook") }),
