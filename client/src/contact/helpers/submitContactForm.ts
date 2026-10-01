@@ -1,3 +1,5 @@
+"use server";
+
 import {
   validateContactForm,
   type ContactFormErrors,
@@ -12,6 +14,10 @@ export async function submitContactForm(
   _previousState: ContactFormState,
   formData: FormData,
 ): Promise<ContactFormState> {
+  if (String(formData.get("website") ?? "").trim()) {
+    return { status: "success" };
+  }
+
   const values = {
     name: String(formData.get("name") ?? "").trim(),
     email: String(formData.get("email") ?? "").trim(),

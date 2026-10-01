@@ -4,7 +4,8 @@ export const ContactError = () => (
   <>
     <Heading level={2}>Oops!</Heading>
     <Text as="p">
-      There was an error submitting your message. Please try again later.
+      We couldn&apos;t confirm your message was sent. Your message is still
+      here, and you can try again.
     </Text>
   </>
 );

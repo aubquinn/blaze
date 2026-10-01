@@ -5,6 +5,7 @@ import { FormLayout } from "@astryxdesign/core/FormLayout";
 import { TextInput } from "@astryxdesign/core/TextInput";
 import { TextArea } from "@astryxdesign/core/TextArea";
 import { Button } from "@astryxdesign/core/Button";
+import { VisuallyHidden } from "@astryxdesign/core/VisuallyHidden";
 import { Heading, Stack, Text } from "@astryxdesign/core";
 import { ContactSuccess } from "./contactError/ContactSuccess";
 import { submitContactForm } from "./helpers/submitContactForm";
@@ -26,8 +27,18 @@ export const ContactForm = () => {
       <Heading level={1}>Contact</Heading>
       {state.status === "success" && <ContactSuccess />}
       {state.status === "error" && <ContactError />}
-      {(state.status === "idle" || state.status === "invalid") && (
+      {(state.status === "idle" ||
+        state.status === "invalid" ||
+        state.status === "error") && (
         <form action={formAction}>
+          <VisuallyHidden aria-hidden="true">
+            <input
+              type="text"
+              name="website"
+              autoComplete="off"
+              tabIndex={-1}
+            />
+          </VisuallyHidden>
           <FormLayout defaultOptionality="required">
             <Text as="p" type="supporting">
               All fields are required.
@@ -66,11 +77,17 @@ export const ContactForm = () => {
               isDisabled={isPending}
             />
             <Button
-              label={"Submit"}
+              label={state.status === "error" ? "Try again" : "Submit"}
               type="submit"
               isDisabled={isSubmitDisabled}
               isLoading={isPending}
-              tooltip={isPending ? "Submitting..." : "Submit"}
+              tooltip={
+                isPending
+                  ? "Submitting..."
+                  : state.status === "error"
+                    ? "Try again"
+                    : "Submit"
+              }
             />
           </FormLayout>
         </form>

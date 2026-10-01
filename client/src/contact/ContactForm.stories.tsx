@@ -109,7 +109,17 @@ export const Submission: Story = {
     const email = canvas.getByRole("textbox", { name: /Email Address/ });
     const message = canvas.getByRole("textbox", { name: /Message/ });
     const submit = canvas.getByRole("button", { name: "Submit" });
+    const honeypot = canvasElement.querySelector<HTMLInputElement>(
+      'input[name="website"]',
+    );
 
+    await expect(honeypot).toBeInTheDocument();
+    await expect(honeypot).toHaveAttribute("tabindex", "-1");
+    await expect(honeypot?.parentElement).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
+    await expect(canvas.getAllByRole("textbox")).toHaveLength(3);
     await expect(submit).toHaveAttribute("aria-disabled", "true");
     await userEvent.type(name, "Li");
     await userEvent.type(email, "jane@example.com");
