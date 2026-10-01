@@ -4,6 +4,7 @@ import { expect, userEvent, waitFor, within } from "storybook/test";
 import { ContactForm } from "./ContactForm";
 
 const meta = {
+  title: "ContactForm",
   component: ContactForm,
 } satisfies Meta<typeof ContactForm>;
 
