@@ -15,11 +15,11 @@ Open http://localhost:3000. Next.js handles the application; Vite is used by Sto
 
 ## Routes and components
 
-| URL | Next.js route | Existing component |
-| --- | --- | --- |
-| `/` | `src/app/page.tsx` | `src/home/Home.tsx` |
+| URL        | Next.js route              | Existing component            |
+| ---------- | -------------------------- | ----------------------------- |
+| `/`        | `src/app/page.tsx`         | `src/home/Home.tsx`           |
 | `/contact` | `src/app/contact/page.tsx` | `src/contact/ContactForm.tsx` |
-| `/writing` | `src/app/writing/page.tsx` | `src/writing/Writing.tsx` |
+| `/writing` | `src/app/writing/page.tsx` | `src/writing/Writing.tsx`     |
 
 `src/app/layout.tsx` supplies the document, global Astryx CSS, page metadata, and shared layout. `src/shared/Providers.tsx` supplies the theme in both the application and Storybook. `src/shared/SiteShell.tsx` renders the navigation and the active route's `children`.
 
@@ -31,15 +31,15 @@ To add a route, create a `page.tsx` under `src/app` with a default component exp
 
 ## Commands
 
-| Command | Purpose |
-| --- | --- |
-| `pnpm dev` | Run the Next.js development server |
-| `pnpm build` | Build and prerender the production application |
-| `pnpm start` | Serve an existing production build |
-| `pnpm typecheck` | Generate Next.js route types and check TypeScript |
-| `pnpm lint` | Run Next.js, React, TypeScript, and Storybook lint rules |
-| `pnpm storybook` | Open Storybook on port 6006 |
-| `pnpm build-storybook` | Build Storybook into `storybook-static/` |
+| Command                | Purpose                                                  |
+| ---------------------- | -------------------------------------------------------- |
+| `pnpm dev`             | Run the Next.js development server                       |
+| `pnpm build`           | Build and prerender the production application           |
+| `pnpm start`           | Serve an existing production build                       |
+| `pnpm typecheck`       | Generate Next.js route types and check TypeScript        |
+| `pnpm lint`            | Run Next.js, React, TypeScript, and Storybook lint rules |
+| `pnpm storybook`       | Open Storybook on port 6006                              |
+| `pnpm build-storybook` | Build Storybook into `storybook-static/`                 |
 
 Storybook uses `@storybook/nextjs-vite` with `nextjs.appDirectory: true` to mock Next.js navigation and images. A story can set `parameters.nextjs.navigation.pathname` to preview a selected route.
 
@@ -50,6 +50,19 @@ TypeScript 5.9, ESLint 9, and Vitest 4 match the supported peer ranges of the cu
 ## Deployment
 
 Run `pnpm build`, then `pnpm start` on a Node.js host that supports Next.js, or use a Next.js hosting integration. `.next/` is the application build output; the old Vite `dist/` directory is no longer used.
+
+### Docker and App Runner
+
+The `Dockerfile` builds the app with Node.js 24 and pnpm, then copies Next.js standalone output and static assets into a smaller runtime image. From `client/`, build and push it to the ECR repository:
+
+```powershell
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 950219440008.dkr.ecr.eu-west-1.amazonaws.com
+docker build -t blaze_client .
+docker tag blaze_client:latest 950219440008.dkr.ecr.eu-west-1.amazonaws.com/blaze_client:latest
+docker push 950219440008.dkr.ecr.eu-west-1.amazonaws.com/blaze_client:latest
+```
+
+Create an App Runner service from that ECR image, using container port `3000` and `/` as the health-check path. The image starts Next.js with `HOSTNAME=0.0.0.0` so App Runner can reach it. Do not pass secrets as Docker build arguments; configure runtime secrets in App Runner.
 
 This project does not configure a static export. Although the current pages are prerendered, the default image optimizer and future article revalidation use a Next.js runtime.
 
