@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - "client/**"
-      - ".github/ecs/task-definition.json"
+      - ".github/ecs/blaze-client-task-definition.json"
       - ".github/workflows/deploy-client.yml"
   workflow_dispatch:
 
