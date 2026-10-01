@@ -1,40 +1,46 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState } from "react";
 import { FormLayout } from "@astryxdesign/core/FormLayout";
 import { TextInput } from "@astryxdesign/core/TextInput";
 import { TextArea } from "@astryxdesign/core/TextArea";
 import { Button } from "@astryxdesign/core/Button";
-import { Spinner } from "@astryxdesign/core/Spinner";
-import { Heading, Stack } from "@astryxdesign/core";
+import { Heading, Stack, Text } from "@astryxdesign/core";
 import { ContactSuccess } from "./ContactSuccess";
 import { submitContactForm } from "./submitContactForm";
 import { ContactError } from "./ContactError";
+import { useContactField } from "./useContactField";
 
 export const ContactForm = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
   const [state, formAction, isPending] = useActionState(submitContactForm, {
     status: "idle",
   });
-  const isSubmitDisabled = !name.trim() || !email.trim() || !message.trim();
+  const showErrors = state.status === "invalid";
+  const name = useContactField("name", showErrors);
+  const email = useContactField("email", showErrors);
+  const message = useContactField("message", showErrors);
+  const isSubmitDisabled = !name.isValid || !email.isValid || !message.isValid;
 
   return (
     <Stack direction="vertical" gap={8} padding={8}>
       <Heading level={1}>Contact</Heading>
-      {isPending && <Spinner size="lg" label="Sending your message..." />}
       {state.status === "success" && <ContactSuccess />}
       {state.status === "error" && <ContactError />}
-      {!isPending && state.status === "idle" && (
+      {(state.status === "idle" || state.status === "invalid") && (
         <form action={formAction}>
-          <FormLayout>
+          <FormLayout defaultOptionality="required">
+            <Text as="p" type="supporting">
+              All fields are required.
+            </Text>
             <TextInput
               label="Full Name"
+              description="At least 5 characters."
               htmlName="name"
               autoComplete="name"
-              value={name}
-              onChange={setName}
+              value={name.value}
+              onChange={name.onChange}
+              status={name.status}
+              statusVariant="detached"
               isRequired
               isDisabled={isPending}
             />
@@ -43,23 +49,29 @@ export const ContactForm = () => {
               htmlName="email"
               type="email"
               autoComplete="email"
-              value={email}
-              onChange={setEmail}
+              value={email.value}
+              onChange={email.onChange}
+              status={email.status}
+              statusVariant="detached"
               isRequired
               isDisabled={isPending}
             />
             <TextArea
               label="Message"
+              description="Please use at least 3 words. Punctuation is optional."
               htmlName="message"
-              value={message}
-              onChange={setMessage}
+              value={message.value}
+              onChange={message.onChange}
+              status={message.status}
+              statusVariant="detached"
               isRequired
               isDisabled={isPending}
             />
             <Button
               label={isPending ? "Submitting..." : "Submit"}
               type="submit"
-              isDisabled={isSubmitDisabled || isPending}
+              isDisabled={isSubmitDisabled}
+              isLoading={isPending}
             />
           </FormLayout>
         </form>

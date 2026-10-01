@@ -1,5 +1,11 @@
+import {
+  validateContactForm,
+  type ContactFormErrors,
+} from "./validateContactForm";
+
 export type ContactFormState =
   | { status: "idle" | "success" }
+  | { status: "invalid"; errors: ContactFormErrors }
   | { status: "error"; message: string };
 
 export async function submitContactForm(
@@ -12,11 +18,9 @@ export async function submitContactForm(
     message: String(formData.get("message") ?? "").trim(),
   };
 
-  if (!values.name || !values.email || !values.message) {
-    return {
-      status: "error",
-      message: "Please fill in your name, email address, and message.",
-    };
+  const errors = validateContactForm(values);
+  if (Object.keys(errors).length > 0) {
+    return { status: "invalid", errors };
   }
 
   // TODO: Replace this simulated request with an HTTP POST of values.
