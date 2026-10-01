@@ -64,6 +64,19 @@ docker push 950219440008.dkr.ecr.eu-west-1.amazonaws.com/blaze_client:latest
 
 Create an App Runner service from that ECR image, using container port `3000` and `/` as the health-check path. The image starts Next.js with `HOSTNAME=0.0.0.0` so App Runner can reach it. Do not pass secrets as Docker build arguments; configure runtime secrets in App Runner.
 
+### GitHub Actions deployment
+
+`.github/workflows/deploy-client.yml` builds and pushes the client image after changes to `client/` are pushed to `main` (including merged pull requests), then asks App Runner to deploy the `latest` tag. It also supports manual runs from GitHub Actions. Docker runs on GitHub's hosted runner; it is not required on a developer machine.
+
+Before enabling the workflow:
+
+1. Create an App Runner service from `950219440008.dkr.ecr.eu-west-1.amazonaws.com/blaze_client:latest`, with automatic deployments disabled because the workflow calls `start-deployment` explicitly.
+2. Add the GitHub repository secrets `AWS_ROLE_ARN` and `APP_RUNNER_SERVICE_ARN`.
+3. Configure the AWS role to trust GitHub's OIDC provider for this repository's `main` ref. Grant it ECR push permissions for `blaze_client`, `ecr:GetAuthorizationToken`, and `apprunner:StartDeployment` for the service.
+4. Give App Runner its own ECR access role so it can pull the private image. This is separate from the GitHub deployment role.
+
+The workflow tags each image with the commit SHA for traceability and also pushes `latest`, which is the tag configured in App Runner.
+
 This project does not configure a static export. Although the current pages are prerendered, the default image optimizer and future article revalidation use a Next.js runtime.
 
 The ASP.NET Core API and AWS services described in the architecture decisions remain planned work. See [technology choices](../decisions/stack-choice.md) and [rendering strategy](../decisions/rendering-strategy.md).
