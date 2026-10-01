@@ -28,16 +28,20 @@ export const ContactForm = ({
   const email = useContactField("email", showErrors);
   const message = useContactField("message", showErrors);
   const isSubmitDisabled = !name.isValid || !email.isValid || !message.isValid;
+
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     const formData = new FormData(event.currentTarget);
-    const honeypot = String(formData.get("website") ?? "").trim();
     const values = {
       name: String(formData.get("name") ?? ""),
       email: String(formData.get("email") ?? ""),
       message: String(formData.get("message") ?? ""),
     };
+    const validation = validateContactForm(
+      values,
+      String(formData.get("website") ?? ""),
+    );
 
-    if (honeypot || Object.keys(validateContactForm(values)).length > 0) {
+    if (!validation.isValid) {
       event.preventDefault();
     }
   };

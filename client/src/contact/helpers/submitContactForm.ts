@@ -14,19 +14,21 @@ export async function submitContactForm(
   _previousState: ContactFormState,
   formData: FormData,
 ): Promise<ContactFormState> {
-  if (String(formData.get("website") ?? "").trim()) {
-    return { status: "success" };
-  }
-
   const values = {
     name: String(formData.get("name") ?? "").trim(),
     email: String(formData.get("email") ?? "").trim(),
     message: String(formData.get("message") ?? "").trim(),
   };
 
-  const errors = validateContactForm(values);
-  if (Object.keys(errors).length > 0) {
-    return { status: "invalid", errors };
+  const validation = validateContactForm(
+    values,
+    String(formData.get("website") ?? ""),
+  );
+  if (validation.isHoneypotFilled) {
+    return { status: "success" };
+  }
+  if (!validation.isValid) {
+    return { status: "invalid", errors: validation.errors };
   }
 
   // TODO: Replace this simulated request with an HTTP POST of values.
