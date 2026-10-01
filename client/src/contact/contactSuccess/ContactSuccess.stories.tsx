@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { ContactSuccess } from "./ContactSuccess";
 
 const meta = {
+  title: "Contact Success",
   component: ContactSuccess,
 } satisfies Meta<typeof ContactSuccess>;
 
