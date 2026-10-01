@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
 import { ContactForm } from "./ContactForm";
+import type { submitContactForm } from "./helpers/submitContactForm";
 
 const meta = {
   title: "ContactForm",
@@ -218,5 +219,75 @@ export const InvalidFormBlocksSubmission: Story = {
     await expect(
       canvas.queryByRole("heading", { name: "Thank you!" }),
     ).not.toBeInTheDocument();
+  },
+};
+
+export const RetryAfterFailure: Story = {
+  render: () => {
+    let attempts = 0;
+    const submitAction: typeof submitContactForm = async () => {
+      attempts += 1;
+      return attempts === 1
+        ? { status: "error", message: "Temporary submission failure." }
+        : { status: "success" };
+    };
+
+    return <ContactForm submitAction={submitAction} />;
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const name = canvas.getByRole("textbox", { name: "Full Name" });
+    const email = canvas.getByRole("textbox", { name: "Email Address" });
+    const message = canvas.getByRole("textbox", { name: "Message" });
+
+    await userEvent.type(name, "Jane Doe");
+    await userEvent.type(email, "jane@example.com");
+    await userEvent.type(message, "Hello");
+    await userEvent.click(canvas.getByRole("button", { name: "Submit" }));
+
+    await expect(
+      canvas.getByText(/We couldn.t confirm your message was sent/),
+    ).toBeVisible();
+    await expect(name).toHaveValue("Jane Doe");
+    await expect(email).toHaveValue("jane@example.com");
+    await expect(message).toHaveValue("Hello");
+
+    await userEvent.click(canvas.getByRole("button", { name: "Try again" }));
+
+    await expect(
+      canvas.getByRole("heading", { name: "Thank you!" }),
+    ).toBeVisible();
+  },
+};
+
+export const SubmissionFailure: Story = {
+  render: () => {
+    const submitAction: typeof submitContactForm = async () => ({
+      status: "error",
+      message: "Temporary submission failure.",
+    });
+
+    return <ContactForm submitAction={submitAction} />;
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const name = canvas.getByRole("textbox", { name: "Full Name" });
+    const email = canvas.getByRole("textbox", { name: "Email Address" });
+    const message = canvas.getByRole("textbox", { name: "Message" });
+
+    await userEvent.type(name, "Jane Doe");
+    await userEvent.type(email, "jane@example.com");
+    await userEvent.type(message, "Hello");
+    await userEvent.click(canvas.getByRole("button", { name: "Submit" }));
+
+    await expect(
+      canvas.getByText(/We couldn.t confirm your message was sent/),
+    ).toBeVisible();
+    await expect(name).toHaveValue("Jane Doe");
+    await expect(email).toHaveValue("jane@example.com");
+    await expect(message).toHaveValue("Hello");
+    await expect(
+      canvas.getByRole("button", { name: "Try again" }),
+    ).toBeVisible();
   },
 };

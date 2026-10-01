@@ -13,8 +13,14 @@ import { ContactError } from "./contactError/ContactError";
 import { useContactField } from "./hooks/useContactField";
 import { validateContactForm } from "./helpers/validateContactForm";
 
-export const ContactForm = () => {
-  const [state, formAction, isPending] = useActionState(submitContactForm, {
+type ContactFormProps = {
+  submitAction?: typeof submitContactForm;
+};
+
+export const ContactForm = ({
+  submitAction = submitContactForm,
+}: ContactFormProps) => {
+  const [state, formAction, isPending] = useActionState(submitAction, {
     status: "idle",
   });
   const showErrors = state.status === "invalid";
@@ -40,7 +46,6 @@ export const ContactForm = () => {
     <Stack direction="vertical" gap={8} padding={8}>
       <Heading level={1}>Contact</Heading>
       {state.status === "success" && <ContactSuccess />}
-      {state.status === "error" && <ContactError />}
       {(state.status === "idle" ||
         state.status === "invalid" ||
         state.status === "error") && (
@@ -106,6 +111,7 @@ export const ContactForm = () => {
           </FormLayout>
         </form>
       )}
+      {state.status === "error" && <ContactError />}
     </Stack>
   );
 };
