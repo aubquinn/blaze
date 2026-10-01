@@ -7,9 +7,9 @@ import { TextArea } from "@astryxdesign/core/TextArea";
 import { Button } from "@astryxdesign/core/Button";
 import { VisuallyHidden } from "@astryxdesign/core/VisuallyHidden";
 import { Heading, Stack, Text } from "@astryxdesign/core";
-import { ContactSuccess } from "./contactError/ContactSuccess";
+import { ContactSuccess } from "./contactSuccess/ContactSuccess";
 import { submitContactForm } from "./helpers/submitContactForm";
-import { ContactError } from "./contactSuccess/ContactError";
+import { ContactError } from "./contactError/ContactError";
 import { useContactField } from "./hooks/useContactField";
 
 export const ContactForm = () => {
