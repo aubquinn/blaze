@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, type SubmitEvent } from "react";
 import { FormLayout } from "@astryxdesign/core/FormLayout";
 import { TextInput } from "@astryxdesign/core/TextInput";
 import { TextArea } from "@astryxdesign/core/TextArea";
@@ -11,6 +11,7 @@ import { ContactSuccess } from "./contactSuccess/ContactSuccess";
 import { submitContactForm } from "./helpers/submitContactForm";
 import { ContactError } from "./contactError/ContactError";
 import { useContactField } from "./hooks/useContactField";
+import { validateContactForm } from "./helpers/validateContactForm";
 
 export const ContactForm = () => {
   const [state, formAction, isPending] = useActionState(submitContactForm, {
@@ -21,6 +22,19 @@ export const ContactForm = () => {
   const email = useContactField("email", showErrors);
   const message = useContactField("message", showErrors);
   const isSubmitDisabled = !name.isValid || !email.isValid || !message.isValid;
+  const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+    const formData = new FormData(event.currentTarget);
+    const honeypot = String(formData.get("website") ?? "").trim();
+    const values = {
+      name: String(formData.get("name") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      message: String(formData.get("message") ?? ""),
+    };
+
+    if (honeypot || Object.keys(validateContactForm(values)).length > 0) {
+      event.preventDefault();
+    }
+  };
 
   return (
     <Stack direction="vertical" gap={8} padding={8}>
@@ -30,7 +44,7 @@ export const ContactForm = () => {
       {(state.status === "idle" ||
         state.status === "invalid" ||
         state.status === "error") && (
-        <form action={formAction}>
+        <form action={formAction} onSubmit={handleSubmit}>
           <VisuallyHidden aria-hidden="true">
             <input
               type="text"

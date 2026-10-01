@@ -161,3 +161,62 @@ export const Submission: Story = {
     ).not.toBeInTheDocument();
   },
 };
+
+export const HoneypotBlocksSubmission: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const name = canvas.getByRole("textbox", { name: "Full Name" });
+    const email = canvas.getByRole("textbox", { name: "Email Address" });
+    const message = canvas.getByRole("textbox", { name: "Message" });
+    const submit = canvas.getByRole("button", { name: "Submit" });
+    const honeypot = canvasElement.querySelector<HTMLInputElement>(
+      'input[name="website"]',
+    );
+
+    if (!honeypot) {
+      throw new Error("Contact form honeypot was not rendered.");
+    }
+
+    await userEvent.type(name, "Li");
+    await userEvent.type(email, "jane@example.com");
+    await userEvent.type(message, "Hello");
+    honeypot.value = "automated submission";
+
+    await userEvent.click(submit);
+
+    await expect(name).toHaveValue("Li");
+    await expect(submit).not.toHaveAttribute("aria-busy", "true");
+    await expect(
+      canvas.queryByRole("heading", { name: "Thank you!" }),
+    ).not.toBeInTheDocument();
+  },
+};
+
+export const InvalidFormBlocksSubmission: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const name = canvas.getByRole("textbox", { name: "Full Name" });
+    const email = canvas.getByRole("textbox", { name: "Email Address" });
+    const message = canvas.getByRole("textbox", { name: "Message" });
+    const submit = canvas.getByRole("button", { name: "Submit" });
+    const form = canvasElement.querySelector("form");
+
+    if (!form) {
+      throw new Error("Contact form was not rendered.");
+    }
+
+    await userEvent.type(name, "   ");
+    await userEvent.type(email, "jane@example.com");
+    await userEvent.type(message, "Hello");
+    await expect(submit).toHaveAttribute("aria-disabled", "true");
+
+    form.requestSubmit();
+
+    await expect(name).toHaveAttribute("aria-invalid", "true");
+    await expect(name).toHaveValue("   ");
+    await expect(submit).not.toHaveAttribute("aria-busy", "true");
+    await expect(
+      canvas.queryByRole("heading", { name: "Thank you!" }),
+    ).not.toBeInTheDocument();
+  },
+};
