@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Heading, Stack, Text } from "@astryxdesign/core";
+import { Heading, Text } from "@astryxdesign/core/Text";
+import { Stack } from "@astryxdesign/core/Stack";
 
 export default function NotFound() {
   return (

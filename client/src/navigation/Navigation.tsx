@@ -3,15 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Heading,
-  SideNav,
-  SideNavItem,
-  Stack,
-  TopNav,
-  TopNavHeading,
-  TopNavItem,
-} from "@astryxdesign/core";
+import { Heading } from "@astryxdesign/core/Text";
+import { SideNav, SideNavItem } from "@astryxdesign/core/SideNav";
+import { Stack } from "@astryxdesign/core/Stack";
+import { TopNav, TopNavHeading, TopNavItem } from "@astryxdesign/core/TopNav";
 import logoImg from "../assets/logo.webp";
 
 type NavigationProps = {

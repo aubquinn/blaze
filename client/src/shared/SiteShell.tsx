@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { Navigation } from "../navigation/Navigation";
 import { AppShell } from "@astryxdesign/core/AppShell";
-import { useMediaQuery } from "@astryxdesign/core";
+import { useMediaQuery } from "@astryxdesign/core/hooks";
 
 export const SiteShell = ({ children }: { children: ReactNode }) => {
   const isCompact = useMediaQuery("(width < 1024px)");
