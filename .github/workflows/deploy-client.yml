@@ -23,8 +23,9 @@ jobs:
 
     env:
       AWS_REGION: eu-west-1
-      S3_BUCKET: ${{ secrets.S3_BUCKET_NAME }}
-      CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+      ECR_REGISTRY: 950219440008.dkr.ecr.eu-west-1.amazonaws.com
+      ECR_REPOSITORY: blaze_client
+      IMAGE_TAG: ${{ github.sha }}
 
     steps:
       - name: Check out source
@@ -50,9 +51,10 @@ jobs:
         working-directory: client
         run: pnpm run typecheck
 
-      - name: Build
-        working-directory: client
-        run: pnpm run build
+      - name: Debug GitHub OIDC claims
+        uses: github/actions-oidc-debugger@main
+        with:
+          audience: sts.amazonaws.com
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -60,12 +62,22 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Deploy to S3
-        run: |
-          aws s3 sync client/out/ "s3://${S3_BUCKET}" --delete
+      - name: Log in to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Invalidate CloudFront cache
+      - name: Build Docker image
         run: |
-          aws cloudfront create-invalidation \
-            --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" \
-            --paths "/*"
+          docker build \
+            --pull \
+            -f client/Dockerfile \
+            -t "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" \
+            client
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+      - name: Show deployed image
+        run: |
+          echo "Image pushed:"
+          echo "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
