@@ -4,6 +4,7 @@ import {
   validateContactForm,
   type ContactFormErrors,
 } from "./validateContactForm";
+import { sanitizeContactText } from "./sanitizeContactText";
 
 export type ContactFormState =
   | { status: "idle" | "success" }
@@ -15,9 +16,9 @@ export async function submitContactForm(
   formData: FormData,
 ): Promise<ContactFormState> {
   const values = {
-    name: String(formData.get("name") ?? "").trim(),
-    email: String(formData.get("email") ?? "").trim(),
-    message: String(formData.get("message") ?? "").trim(),
+    name: sanitizeContactText(formData.get("name")),
+    email: sanitizeContactText(formData.get("email")),
+    message: sanitizeContactText(formData.get("message")),
   };
 
   const validation = validateContactForm(

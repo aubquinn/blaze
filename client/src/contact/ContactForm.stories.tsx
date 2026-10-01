@@ -4,6 +4,11 @@ import { expect, userEvent, waitFor, within } from "storybook/test";
 import { ContactForm } from "./ContactForm";
 import type { submitContactForm } from "./helpers/submitContactForm";
 
+const successfulSubmitAction: typeof submitContactForm = async () => {
+  await new Promise<void>((resolve) => setTimeout(resolve, 750));
+  return { status: "success" };
+};
+
 const meta = {
   title: "ContactForm",
   component: ContactForm,
@@ -105,6 +110,7 @@ export const IndependentValidation: Story = {
 };
 
 export const Submission: Story = {
+  render: () => <ContactForm submitAction={successfulSubmitAction} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const name = canvas.getByRole("textbox", { name: /Full Name/ });
