@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   contactFieldValidators,
   type ContactFormValues,
-} from "./validateContactForm";
+} from "../helpers/validateContactForm";
 
 const VALIDATION_DELAY_MS = 350;
 

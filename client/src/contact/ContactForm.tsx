@@ -6,10 +6,10 @@ import { TextInput } from "@astryxdesign/core/TextInput";
 import { TextArea } from "@astryxdesign/core/TextArea";
 import { Button } from "@astryxdesign/core/Button";
 import { Heading, Stack, Text } from "@astryxdesign/core";
-import { ContactSuccess } from "./ContactSuccess";
-import { submitContactForm } from "./submitContactForm";
-import { ContactError } from "./ContactError";
-import { useContactField } from "./useContactField";
+import { ContactSuccess } from "./contactError/ContactSuccess";
+import { submitContactForm } from "./helpers/submitContactForm";
+import { ContactError } from "./contactSuccess/ContactError";
+import { useContactField } from "./hooks/useContactField";
 
 export const ContactForm = () => {
   const [state, formAction, isPending] = useActionState(submitContactForm, {
