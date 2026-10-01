@@ -66,11 +66,11 @@ export const ContactForm = () => {
               isDisabled={isPending}
             />
             <Button
-              label={isPending ? "Submitting..." : "Submit"}
+              label={"Submit"}
               type="submit"
               isDisabled={isSubmitDisabled}
               isLoading={isPending}
-              tooltip="Complete all required fields to submit"
+              tooltip={isPending ? "Submitting..." : "Submit"}
             />
           </FormLayout>
         </form>
