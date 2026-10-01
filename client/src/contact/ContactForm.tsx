@@ -102,6 +102,7 @@ export const ContactForm = ({
             <Button
               label={state.status === "error" ? "Try again" : "Submit"}
               type="submit"
+              variant="primary"
               isDisabled={isSubmitDisabled}
               isLoading={isPending}
               tooltip={
