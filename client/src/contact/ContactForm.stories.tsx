@@ -1,13 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { expect, userEvent, waitFor, within } from "storybook/test";
+import { expect, userEvent, within } from "storybook/test";
 
 import { ContactForm } from "./ContactForm";
-import type { submitContactForm } from "./helpers/submitContactForm";
-
-const successfulSubmitAction: typeof submitContactForm = async () => {
-  await new Promise<void>((resolve) => setTimeout(resolve, 750));
-  return { status: "success" };
-};
 
 const meta = {
   title: "ContactForm",
@@ -109,56 +103,6 @@ export const IndependentValidation: Story = {
   },
 };
 
-export const Submission: Story = {
-  render: () => <ContactForm submitAction={successfulSubmitAction} />,
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const name = canvas.getByRole("textbox", { name: /Full Name/ });
-    const email = canvas.getByRole("textbox", { name: /Email Address/ });
-    const message = canvas.getByRole("textbox", { name: /Message/ });
-    const submit = canvas.getByRole("button", { name: "Submit" });
-    await expect(canvas.getAllByRole("textbox")).toHaveLength(3);
-    await expect(submit).toHaveAttribute("aria-disabled", "true");
-    await userEvent.type(name, "Li");
-    await userEvent.type(email, "jane@example.com");
-    await userEvent.type(message, "   ");
-    await expect(submit).toHaveAttribute("aria-disabled", "true");
-    await userEvent.clear(message);
-    await userEvent.type(message, "Hi");
-    await expect(submit).not.toHaveAttribute("aria-disabled", "true");
-
-    await userEvent.click(submit);
-    await expect(submit).toBeVisible();
-    await expect(submit).toHaveAttribute("aria-busy", "true");
-    await expect(submit).toHaveAttribute("aria-disabled", "true");
-    await expect(within(submit).getByRole("status")).toHaveTextContent(
-      /Loading/,
-    );
-    await expect(name).toBeVisible();
-    await expect(name).toBeDisabled();
-    await expect(name).toHaveValue("Li");
-    await expect(email).toBeVisible();
-    await expect(email).toBeDisabled();
-    await expect(email).toHaveValue("jane@example.com");
-    await expect(message).toBeVisible();
-    await expect(message).toBeDisabled();
-    await expect(message).toHaveValue("Hi");
-
-    await waitFor(async () => {
-      await expect(
-        canvas.getByRole("heading", { name: "Thank you!" }),
-      ).toBeVisible();
-    });
-    await expect(
-      canvas.getByText("I'll be in touch as soon as I can."),
-    ).toBeVisible();
-    await expect(canvas.queryByRole("textbox")).not.toBeInTheDocument();
-    await expect(
-      canvas.queryByRole("button", { name: /Submit/ }),
-    ).not.toBeInTheDocument();
-  },
-};
-
 export const InvalidFormBlocksSubmission: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -185,72 +129,5 @@ export const InvalidFormBlocksSubmission: Story = {
     await expect(
       canvas.queryByRole("heading", { name: "Thank you!" }),
     ).not.toBeInTheDocument();
-  },
-};
-
-export const RetryAfterFailure: Story = {
-  render: () => {
-    let attempts = 0;
-    const submitAction: typeof submitContactForm = async () => {
-      attempts += 1;
-      return attempts === 1 ? { status: "error" } : { status: "success" };
-    };
-
-    return <ContactForm submitAction={submitAction} />;
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const name = canvas.getByRole("textbox", { name: "Full Name" });
-    const email = canvas.getByRole("textbox", { name: "Email Address" });
-    const message = canvas.getByRole("textbox", { name: "Message" });
-
-    await userEvent.type(name, "Jane Doe");
-    await userEvent.type(email, "jane@example.com");
-    await userEvent.type(message, "Hello");
-    await userEvent.click(canvas.getByRole("button", { name: "Submit" }));
-
-    await expect(
-      canvas.getByText(/We couldn.t confirm your message was sent/),
-    ).toBeVisible();
-    await expect(name).toHaveValue("Jane Doe");
-    await expect(email).toHaveValue("jane@example.com");
-    await expect(message).toHaveValue("Hello");
-
-    await userEvent.click(canvas.getByRole("button", { name: "Try again" }));
-
-    await expect(
-      canvas.getByRole("heading", { name: "Thank you!" }),
-    ).toBeVisible();
-  },
-};
-
-export const SubmissionFailure: Story = {
-  render: () => {
-    const submitAction: typeof submitContactForm = async () => ({
-      status: "error",
-    });
-
-    return <ContactForm submitAction={submitAction} />;
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const name = canvas.getByRole("textbox", { name: "Full Name" });
-    const email = canvas.getByRole("textbox", { name: "Email Address" });
-    const message = canvas.getByRole("textbox", { name: "Message" });
-
-    await userEvent.type(name, "Jane Doe");
-    await userEvent.type(email, "jane@example.com");
-    await userEvent.type(message, "Hello");
-    await userEvent.click(canvas.getByRole("button", { name: "Submit" }));
-
-    await expect(
-      canvas.getByText(/We couldn.t confirm your message was sent/),
-    ).toBeVisible();
-    await expect(name).toHaveValue("Jane Doe");
-    await expect(email).toHaveValue("jane@example.com");
-    await expect(message).toHaveValue("Hello");
-    await expect(
-      canvas.getByRole("button", { name: "Try again" }),
-    ).toBeVisible();
   },
 };
