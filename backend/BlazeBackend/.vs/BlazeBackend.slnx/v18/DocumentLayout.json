@@ -1,0 +1,126 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\vso\\blaze\\backend\\BlazeBackend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F995F205-CE9A-4512-841E-56FA8BDEACFE}|BlazeBackend\\BlazeBackend.csproj|c:\\vso\\blaze\\backend\\blazebackend\\blazebackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F995F205-CE9A-4512-841E-56FA8BDEACFE}|BlazeBackend\\BlazeBackend.csproj|solutionrelative:blazebackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F995F205-CE9A-4512-841E-56FA8BDEACFE}|BlazeBackend\\BlazeBackend.csproj|c:\\vso\\blaze\\backend\\blazebackend\\blazebackend\\blazebackend.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{F995F205-CE9A-4512-841E-56FA8BDEACFE}|BlazeBackend\\BlazeBackend.csproj|solutionrelative:blazebackend\\blazebackend.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F995F205-CE9A-4512-841E-56FA8BDEACFE}|BlazeBackend\\BlazeBackend.csproj|c:\\vso\\blaze\\backend\\blazebackend\\blazebackend\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F995F205-CE9A-4512-841E-56FA8BDEACFE}|BlazeBackend\\BlazeBackend.csproj|solutionrelative:blazebackend\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F995F205-CE9A-4512-841E-56FA8BDEACFE}|BlazeBackend\\BlazeBackend.csproj|c:\\vso\\blaze\\backend\\blazebackend\\blazebackend\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F995F205-CE9A-4512-841E-56FA8BDEACFE}|BlazeBackend\\BlazeBackend.csproj|solutionrelative:blazebackend\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F995F205-CE9A-4512-841E-56FA8BDEACFE}|BlazeBackend\\BlazeBackend.csproj|c:\\vso\\blaze\\backend\\blazebackend\\blazebackend\\controllers\\contactformcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F995F205-CE9A-4512-841E-56FA8BDEACFE}|BlazeBackend\\BlazeBackend.csproj|solutionrelative:blazebackend\\controllers\\contactformcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F995F205-CE9A-4512-841E-56FA8BDEACFE}|BlazeBackend\\BlazeBackend.csproj|c:\\vso\\blaze\\backend\\blazebackend\\blazebackend\\models\\contactformdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F995F205-CE9A-4512-841E-56FA8BDEACFE}|BlazeBackend\\BlazeBackend.csproj|solutionrelative:blazebackend\\models\\contactformdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ContactFormData.cs",
+              "DocumentMoniker": "C:\\vso\\blaze\\backend\\BlazeBackend\\BlazeBackend\\Models\\ContactFormData.cs",
+              "RelativeDocumentMoniker": "BlazeBackend\\Models\\ContactFormData.cs",
+              "ToolTip": "C:\\vso\\blaze\\backend\\BlazeBackend\\BlazeBackend\\Models\\ContactFormData.cs",
+              "RelativeToolTip": "BlazeBackend\\Models\\ContactFormData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-02T16:54:22.21Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ContactFormController.cs",
+              "DocumentMoniker": "C:\\vso\\blaze\\backend\\BlazeBackend\\BlazeBackend\\Controllers\\ContactFormController.cs",
+              "RelativeDocumentMoniker": "BlazeBackend\\Controllers\\ContactFormController.cs",
+              "ToolTip": "C:\\vso\\blaze\\backend\\BlazeBackend\\BlazeBackend\\Controllers\\ContactFormController.cs",
+              "RelativeToolTip": "BlazeBackend\\Controllers\\ContactFormController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-02T16:46:32.243Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "WeatherForecastController.cs",
+              "DocumentMoniker": "C:\\vso\\blaze\\backend\\BlazeBackend\\BlazeBackend\\Controllers\\WeatherForecastController.cs",
+              "RelativeDocumentMoniker": "BlazeBackend\\Controllers\\WeatherForecastController.cs",
+              "ToolTip": "C:\\vso\\blaze\\backend\\BlazeBackend\\BlazeBackend\\Controllers\\WeatherForecastController.cs",
+              "RelativeToolTip": "BlazeBackend\\Controllers\\WeatherForecastController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-02T16:50:26.663Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "WeatherForecast.cs",
+              "DocumentMoniker": "C:\\vso\\blaze\\backend\\BlazeBackend\\BlazeBackend\\WeatherForecast.cs",
+              "RelativeDocumentMoniker": "BlazeBackend\\WeatherForecast.cs",
+              "ToolTip": "C:\\vso\\blaze\\backend\\BlazeBackend\\BlazeBackend\\WeatherForecast.cs",
+              "RelativeToolTip": "BlazeBackend\\WeatherForecast.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-02T16:46:02.208Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BlazeBackend.http",
+              "DocumentMoniker": "C:\\vso\\blaze\\backend\\BlazeBackend\\BlazeBackend\\BlazeBackend.http",
+              "RelativeDocumentMoniker": "BlazeBackend\\BlazeBackend.http",
+              "ToolTip": "C:\\vso\\blaze\\backend\\BlazeBackend\\BlazeBackend\\BlazeBackend.http",
+              "RelativeToolTip": "BlazeBackend\\BlazeBackend.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2026-10-02T16:45:54.724Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\vso\\blaze\\backend\\BlazeBackend\\BlazeBackend\\Program.cs",
+              "RelativeDocumentMoniker": "BlazeBackend\\Program.cs",
+              "ToolTip": "C:\\vso\\blaze\\backend\\BlazeBackend\\BlazeBackend\\Program.cs",
+              "RelativeToolTip": "BlazeBackend\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-02T16:45:32.107Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
