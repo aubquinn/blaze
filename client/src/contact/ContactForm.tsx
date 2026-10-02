@@ -56,7 +56,7 @@ export const ContactForm = ({
   };
 
   return (
-    <Stack direction="vertical" gap={8} padding={8}>
+    <Stack direction="vertical" gap={8} padding={8} maxWidth={650}>
       <Heading level={1}>Contact</Heading>
       {state.status === "success" && <ContactSuccess />}
       {(state.status === "idle" ||
