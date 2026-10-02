@@ -42,6 +42,7 @@ export const Navigation = ({ layout = "side" }: NavigationProps) => {
             <Image
               alt="Portrait of Aubrey Quinn"
               src={logoImg}
+              preload
               width={24}
               height={36}
             />
@@ -80,6 +81,7 @@ export const Navigation = ({ layout = "side" }: NavigationProps) => {
             <Image
               alt="Portrait of Aubrey Quinn"
               src={logoImg}
+              preload
               sizes="228px"
               style={{ width: "100%", height: "auto" }}
             />
