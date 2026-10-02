@@ -43,9 +43,8 @@ public class ContactFormController : ControllerBase
             return ValidationResult.Invalid("Invalid request.");
         }
 
-        // Do not reveal spam-detection details.
-        if (!string.IsNullOrWhiteSpace(postData.ContactReferenceCode) ||
-            postData.AdditionalFields is { Count: > 0 })
+        // Reject unexpected fields without exposing validation details.
+        if (postData.AdditionalFields is { Count: > 0 })
         {
             return ValidationResult.Invalid("Invalid contact form data.");
         }

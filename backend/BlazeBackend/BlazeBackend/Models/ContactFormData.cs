@@ -11,9 +11,6 @@ namespace BlazeBackend.Models
         public string? Email { get; set; }
         public string? Message { get; set; }
 
-        // Honeypot
-        public string? ContactReferenceCode { get; set; }
-
         [JsonExtensionData]
         public Dictionary<string, JsonElement>? AdditionalFields { get; set; }
     }
