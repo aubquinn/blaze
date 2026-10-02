@@ -9,7 +9,7 @@ import { VisuallyHidden } from "@astryxdesign/core/VisuallyHidden";
 import { Heading, Text } from "@astryxdesign/core/Text";
 import { Stack } from "@astryxdesign/core/Stack";
 import { ContactSuccess } from "./contactSuccess/ContactSuccess";
-import type { submitContactForm } from "./helpers/submitContactForm";
+import { submitContactForm } from "./helpers/submitContactForm";
 import { ContactError } from "./contactError/ContactError";
 import { useContactField } from "./hooks/useContactField";
 import {
@@ -21,12 +21,8 @@ type ContactFormProps = {
   submitAction?: typeof submitContactForm;
 };
 
-const unconfiguredSubmitAction: typeof submitContactForm = async () => ({
-  status: "error",
-});
-
 export const ContactForm = ({
-  submitAction = unconfiguredSubmitAction,
+  submitAction = submitContactForm,
 }: ContactFormProps) => {
   const [state, formAction, isPending] = useActionState(submitAction, {
     status: "idle",
