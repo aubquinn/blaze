@@ -43,8 +43,8 @@ export const Navigation = ({ layout = "side" }: NavigationProps) => {
               alt="Portrait of Aubrey Quinn"
               src={logoImg}
               preload
-              width={250}
-              height={375}
+              width={24}
+              height={37}
               unoptimized
             />
           }
@@ -83,8 +83,9 @@ export const Navigation = ({ layout = "side" }: NavigationProps) => {
               alt="Portrait of Aubrey Quinn"
               src={logoImg}
               preload
-              sizes="228px"
-              style={{ width: "100%", height: "auto" }}
+              width={250}
+              height={375}
+              unoptimized
             />
             <Heading level={1}>Aubrey Quinn</Heading>
           </Stack>
