@@ -12,7 +12,10 @@ import { ContactSuccess } from "./contactSuccess/ContactSuccess";
 import type { submitContactForm } from "./helpers/submitContactForm";
 import { ContactError } from "./contactError/ContactError";
 import { useContactField } from "./hooks/useContactField";
-import { validateContactForm } from "./helpers/validateContactForm";
+import {
+  contactFieldMaxLengths,
+  validateContactForm,
+} from "./helpers/validateContactForm";
 
 type ContactFormProps = {
   submitAction?: typeof submitContactForm;
@@ -73,6 +76,7 @@ export const ContactForm = ({
               All fields are required.
             </Text>
             <TextInput
+              {...{ maxLength: contactFieldMaxLengths.name }}
               label="Full Name"
               htmlName="name"
               autoComplete="name"
@@ -84,6 +88,7 @@ export const ContactForm = ({
               isDisabled={isPending}
             />
             <TextInput
+              {...{ maxLength: contactFieldMaxLengths.email }}
               label="Email Address"
               htmlName="email"
               type="email"
@@ -104,6 +109,7 @@ export const ContactForm = ({
               statusVariant="detached"
               isRequired
               isDisabled={isPending}
+              maxLength={contactFieldMaxLengths.message}
             />
             <Button
               label={state.status === "error" ? "Try again" : "Submit"}
