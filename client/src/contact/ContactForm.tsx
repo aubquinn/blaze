@@ -23,7 +23,6 @@ type ContactFormProps = {
 
 const unconfiguredSubmitAction: typeof submitContactForm = async () => ({
   status: "error",
-  message: "No contact submission action was configured.",
 });
 
 export const ContactForm = ({

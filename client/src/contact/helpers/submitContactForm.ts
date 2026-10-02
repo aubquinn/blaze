@@ -9,7 +9,7 @@ import { sanitizeContactText } from "./sanitizeContactText";
 export type ContactFormState =
   | { status: "idle" | "success" }
   | { status: "invalid"; errors: ContactFormErrors }
-  | { status: "error"; message: string };
+  | { status: "error" };
 
 export async function submitContactForm(
   _previousState: ContactFormState,
@@ -32,8 +32,24 @@ export async function submitContactForm(
     return { status: "invalid", errors: validation.errors };
   }
 
-  // TODO: Replace this simulated request with an HTTP POST of values.
-  await new Promise<void>((resolve) => setTimeout(resolve, 750));
+  try {
+    const response = await fetch("/api/contactform", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: values.name,
+        email: values.email,
+        message: values.message,
+      }),
+    });
 
+    if (!response.ok) {
+      return { status: "error" };
+    }
+  } catch {
+    return { status: "error" };
+  }
   return { status: "success" };
 }

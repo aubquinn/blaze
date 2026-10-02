@@ -233,9 +233,7 @@ export const RetryAfterFailure: Story = {
     let attempts = 0;
     const submitAction: typeof submitContactForm = async () => {
       attempts += 1;
-      return attempts === 1
-        ? { status: "error", message: "Temporary submission failure." }
-        : { status: "success" };
+      return attempts === 1 ? { status: "error" } : { status: "success" };
     };
 
     return <ContactForm submitAction={submitAction} />;
@@ -270,7 +268,6 @@ export const SubmissionFailure: Story = {
   render: () => {
     const submitAction: typeof submitContactForm = async () => ({
       status: "error",
-      message: "Temporary submission failure.",
     });
 
     return <ContactForm submitAction={submitAction} />;
