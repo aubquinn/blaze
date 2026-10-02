@@ -118,7 +118,7 @@ export const Submission: Story = {
     const message = canvas.getByRole("textbox", { name: /Message/ });
     const submit = canvas.getByRole("button", { name: "Submit" });
     const honeypot = canvasElement.querySelector<HTMLInputElement>(
-      'input[name="website"]',
+      'input[name="contactReferenceCode"]',
     );
 
     await expect(honeypot).toBeInTheDocument();
@@ -177,7 +177,7 @@ export const HoneypotBlocksSubmission: Story = {
     const message = canvas.getByRole("textbox", { name: "Message" });
     const submit = canvas.getByRole("button", { name: "Submit" });
     const honeypot = canvasElement.querySelector<HTMLInputElement>(
-      'input[name="website"]',
+      'input[name="contactReferenceCode"]',
     );
 
     if (!honeypot) {

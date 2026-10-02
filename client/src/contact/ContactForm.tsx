@@ -42,7 +42,7 @@ export const ContactForm = ({
     };
     const validation = validateContactForm(
       values,
-      String(formData.get("website") ?? ""),
+      String(formData.get("contactReferenceCode") ?? ""),
     );
 
     if (!validation.isValid) {
@@ -61,7 +61,7 @@ export const ContactForm = ({
           <VisuallyHidden aria-hidden="true">
             <input
               type="text"
-              name="website"
+              name="contactReferenceCode"
               autoComplete="off"
               tabIndex={-1}
             />

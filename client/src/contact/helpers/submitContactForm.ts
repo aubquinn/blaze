@@ -20,11 +20,11 @@ export async function submitContactForm(
     email: sanitizeContactText(formData.get("email")),
     message: sanitizeContactText(formData.get("message")),
   };
-
-  const validation = validateContactForm(
-    values,
-    String(formData.get("website") ?? ""),
+  const contactReferenceCode = String(
+    formData.get("contactReferenceCode") ?? "",
   );
+
+  const validation = validateContactForm(values, contactReferenceCode);
   if (validation.isHoneypotFilled) {
     return { status: "success" };
   }
@@ -42,6 +42,7 @@ export async function submitContactForm(
         name: values.name,
         email: values.email,
         message: values.message,
+        contactReferenceCode,
       }),
     });
 
