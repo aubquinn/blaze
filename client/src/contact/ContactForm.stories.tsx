@@ -117,16 +117,6 @@ export const Submission: Story = {
     const email = canvas.getByRole("textbox", { name: /Email Address/ });
     const message = canvas.getByRole("textbox", { name: /Message/ });
     const submit = canvas.getByRole("button", { name: "Submit" });
-    const honeypot = canvasElement.querySelector<HTMLInputElement>(
-      'input[name="contactReferenceCode"]',
-    );
-
-    await expect(honeypot).toBeInTheDocument();
-    await expect(honeypot).toHaveAttribute("tabindex", "-1");
-    await expect(honeypot?.parentElement).toHaveAttribute(
-      "aria-hidden",
-      "true",
-    );
     await expect(canvas.getAllByRole("textbox")).toHaveLength(3);
     await expect(submit).toHaveAttribute("aria-disabled", "true");
     await userEvent.type(name, "Li");
@@ -165,36 +155,6 @@ export const Submission: Story = {
     await expect(canvas.queryByRole("textbox")).not.toBeInTheDocument();
     await expect(
       canvas.queryByRole("button", { name: /Submit/ }),
-    ).not.toBeInTheDocument();
-  },
-};
-
-export const HoneypotBlocksSubmission: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const name = canvas.getByRole("textbox", { name: "Full Name" });
-    const email = canvas.getByRole("textbox", { name: "Email Address" });
-    const message = canvas.getByRole("textbox", { name: "Message" });
-    const submit = canvas.getByRole("button", { name: "Submit" });
-    const honeypot = canvasElement.querySelector<HTMLInputElement>(
-      'input[name="contactReferenceCode"]',
-    );
-
-    if (!honeypot) {
-      throw new Error("Contact form honeypot was not rendered.");
-    }
-
-    await userEvent.type(name, "Li");
-    await userEvent.type(email, "jane@example.com");
-    await userEvent.type(message, "Hello");
-    honeypot.value = "automated submission";
-
-    await userEvent.click(submit);
-
-    await expect(name).toHaveValue("Li");
-    await expect(submit).not.toHaveAttribute("aria-busy", "true");
-    await expect(
-      canvas.queryByRole("heading", { name: "Thank you!" }),
     ).not.toBeInTheDocument();
   },
 };

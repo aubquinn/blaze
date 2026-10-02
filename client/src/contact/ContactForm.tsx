@@ -5,7 +5,6 @@ import { FormLayout } from "@astryxdesign/core/FormLayout";
 import { TextInput } from "@astryxdesign/core/TextInput";
 import { TextArea } from "@astryxdesign/core/TextArea";
 import { Button } from "@astryxdesign/core/Button";
-import { VisuallyHidden } from "@astryxdesign/core/VisuallyHidden";
 import { Heading, Text } from "@astryxdesign/core/Text";
 import { Stack } from "@astryxdesign/core/Stack";
 import { ContactSuccess } from "./contactSuccess/ContactSuccess";
@@ -17,14 +16,8 @@ import {
   validateContactForm,
 } from "./helpers/validateContactForm";
 
-type ContactFormProps = {
-  submitAction?: typeof submitContactForm;
-};
-
-export const ContactForm = ({
-  submitAction = submitContactForm,
-}: ContactFormProps) => {
-  const [state, formAction, isPending] = useActionState(submitAction, {
+export const ContactForm = () => {
+  const [state, formAction, isPending] = useActionState(submitContactForm, {
     status: "idle",
   });
   const showErrors = state.status === "invalid";
@@ -40,10 +33,7 @@ export const ContactForm = ({
       email: String(formData.get("email") ?? ""),
       message: String(formData.get("message") ?? ""),
     };
-    const validation = validateContactForm(
-      values,
-      String(formData.get("contactReferenceCode") ?? ""),
-    );
+    const validation = validateContactForm(values);
 
     if (!validation.isValid) {
       event.preventDefault();
@@ -58,14 +48,6 @@ export const ContactForm = ({
         state.status === "invalid" ||
         state.status === "error") && (
         <form action={formAction} onSubmit={handleSubmit}>
-          <VisuallyHidden aria-hidden="true">
-            <input
-              type="text"
-              name="contactReferenceCode"
-              autoComplete="off"
-              tabIndex={-1}
-            />
-          </VisuallyHidden>
           <FormLayout defaultOptionality="required">
             <Text as="p" type="supporting">
               All fields are required.

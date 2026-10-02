@@ -12,7 +12,6 @@ export type ContactFormErrors = Partial<
 
 export type ContactFormValidation = {
   errors: ContactFormErrors;
-  isHoneypotFilled: boolean;
   isValid: boolean;
 };
 
@@ -59,7 +58,6 @@ export const contactFieldValidators: Record<
 
 export function validateContactForm(
   values: ContactFormValues,
-  honeypotValue = "",
 ): ContactFormValidation {
   const errors: ContactFormErrors = {};
   for (const field of ["name", "email", "message"] as const) {
@@ -69,10 +67,8 @@ export function validateContactForm(
     }
   }
 
-  const isHoneypotFilled = honeypotValue.trim().length > 0;
   return {
     errors,
-    isHoneypotFilled,
-    isValid: !isHoneypotFilled && Object.keys(errors).length === 0,
+    isValid: Object.keys(errors).length === 0,
   };
 }

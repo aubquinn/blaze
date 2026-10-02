@@ -20,14 +20,7 @@ export async function submitContactForm(
     email: sanitizeContactText(formData.get("email")),
     message: sanitizeContactText(formData.get("message")),
   };
-  const contactReferenceCode = String(
-    formData.get("contactReferenceCode") ?? "",
-  );
-
-  const validation = validateContactForm(values, contactReferenceCode);
-  if (validation.isHoneypotFilled) {
-    return { status: "success" };
-  }
+  const validation = validateContactForm(values);
   if (!validation.isValid) {
     return { status: "invalid", errors: validation.errors };
   }
@@ -42,7 +35,6 @@ export async function submitContactForm(
         name: values.name,
         email: values.email,
         message: values.message,
-        contactReferenceCode,
       }),
     });
 
