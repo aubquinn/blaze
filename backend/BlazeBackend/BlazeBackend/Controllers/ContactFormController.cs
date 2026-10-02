@@ -24,16 +24,14 @@ public class ContactFormController : ControllerBase
 
         if (!validationResult.IsValid)
         {
-            return BadRequest(new
-            {
+            return BadRequest(new {
                 error = validationResult.ErrorMessage
             });
         }
 
         // Send email through SES.
 
-        return Ok(new
-        {
+        return Ok(new {
             message = "Email sent successfully."
         });
     }
@@ -46,7 +44,7 @@ public class ContactFormController : ControllerBase
         }
 
         // Do not reveal spam-detection details.
-        if (!string.IsNullOrWhiteSpace(postData.Website) ||
+        if (!string.IsNullOrWhiteSpace(postData.ContactReferenceCode) ||
             postData.AdditionalFields is { Count: > 0 })
         {
             return ValidationResult.Invalid("Invalid contact form data.");

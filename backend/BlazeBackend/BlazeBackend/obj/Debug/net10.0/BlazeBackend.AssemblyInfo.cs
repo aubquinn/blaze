@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BlazeBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1866ce97967383a240253269b91f7a972d2aa15f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e088e832898e488cf8ff807806ad8cdaeca6add2")]
 [assembly: System.Reflection.AssemblyProductAttribute("BlazeBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BlazeBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
