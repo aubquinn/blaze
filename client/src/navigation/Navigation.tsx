@@ -43,8 +43,9 @@ export const Navigation = ({ layout = "side" }: NavigationProps) => {
               alt="Portrait of Aubrey Quinn"
               src={logoImg}
               preload
-              width={24}
-              height={36}
+              width={250}
+              height={375}
+              unoptimized
             />
           }
         />
